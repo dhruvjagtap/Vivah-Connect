@@ -1,6 +1,7 @@
 // lib/firebaseConfig.ts
 import { initializeApp, getApps } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLSolH2-wL7ulsABBJ7580TLOFy6KZTAo",
@@ -16,5 +17,5 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 
 // ✅ Only initialize auth on the client
 const auth = typeof window !== "undefined" ? getAuth(app) : null;
-
-export { auth };
+ const db = getFirestore(app); 
+export { auth, db };
