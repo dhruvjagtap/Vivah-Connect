@@ -5,7 +5,8 @@ export default function Hero() {
         Find Your Perfect Match
       </h1>
       <p className="text-lg md:text-xl max-w-2xl mx-auto">
-        India's trusted platform for meaningful connections and lifetime bonds.
+        India&apos;s trusted platform for meaningful connections and lifetime
+        bonds.
       </p>
       <div className="mt-6">
         <button className="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600">

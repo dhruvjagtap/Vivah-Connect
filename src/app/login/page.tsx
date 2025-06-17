@@ -20,7 +20,7 @@ export default function LoginPage() {
     router.push("/dashboard");
   };
 
-  const handleEmailLogin = async (e: any) => {
+  const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await signInWithEmailAndPassword(auth, email, password);
     router.push("/dashboard");
