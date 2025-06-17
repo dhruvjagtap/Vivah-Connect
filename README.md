@@ -62,7 +62,7 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/your-username/vivah-connect.git](https://github.com/dhruvjagtap/Vivah-Connect.git)
+git clone https://github.com/dhruvjagtap/Vivah-Connect.git
 cd vivah-connect
 ```
 
