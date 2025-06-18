@@ -87,7 +87,7 @@ export default function LoginPage() {
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-60 z-10" />
+      {/* <div className="absolute inset-0 bg-black bg-opacity-60 z-10" /> */}
 
       {/* Login Form */}
       <div className="relative z-20 flex items-center justify-center h-full px-4">

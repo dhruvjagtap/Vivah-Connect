@@ -133,7 +133,7 @@ Vivah Connect is deployed on **[Vercel](https://vercel.com/)** for seamless CI/C
 
 > 🟢 No need for manual deployment – push and go live instantly.
 
-**Live URL:** [https://vivah-connect.vercel.app](https://vivah-connect.vercel.app)
+**Live URL:** [Vivah Connect](https://vivah-connect.vercel.app)
 
 ---
 

@@ -20,13 +20,13 @@ export default function CTA() {
       </p>
       <div className="flex justify-center gap-4">
         <button
-          className="bg-white text-pink-500 px-6 py-2 rounded-full"
+          className="bg-white text-pink-500 px-6 py-2 rounded-full hover:bg-gray-50"
           onClick={toRegister}
         >
           Sign Up
         </button>
         <button
-          className="bg-pink-600 text-white px-6 py-2 rounded-full"
+          className="bg-pink-600 text-white px-6 py-2 rounded-full hover:bg-pink-700"
           onClick={toLogin}
         >
           Login
