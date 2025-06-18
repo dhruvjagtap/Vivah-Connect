@@ -172,7 +172,7 @@ export default function RegisterPage() {
                   required
                   value={formData[name as keyof typeof formData]}
                   onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-pink-500"
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-pink-500 text-black"
                 />
               </div>
             ))}
