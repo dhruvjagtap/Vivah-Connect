@@ -63,7 +63,7 @@ export default function RegisterPage() {
         createdAt: new Date(),
       });
 
-      router.push("/dashboard");
+      router.push("/login");
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);

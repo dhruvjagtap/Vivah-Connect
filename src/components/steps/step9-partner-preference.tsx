@@ -1,10 +1,11 @@
 "use client";
 
+import { FormData } from "@/types";
 import { FormInput } from "../form-input";
 import { FormSelect } from "../form-select";
 
 interface Step9Props {
-  data: any;
+  data: FormData;
   onChange: (field: string, value: string) => void;
   errors: Record<string, string>;
 }

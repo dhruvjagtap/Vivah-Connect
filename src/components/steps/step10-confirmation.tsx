@@ -2,8 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import React from "react";
+
+import { FormData } from "@/types";
+
 interface Step10Props {
-  data: any;
+  data: FormData;
   onChange: (field: string, value: string) => void;
   errors: Record<string, string>;
   onSubmit: () => void;
@@ -61,7 +64,7 @@ export function Step10Confirmation({
         <label className="flex items-start space-x-3">
           <input
             type="checkbox"
-            checked={data.termsAccepted || false}
+            checked={Boolean(data.termsAccepted)}
             onChange={(e) =>
               onChange("termsAccepted", e.target.checked.toString())
             }

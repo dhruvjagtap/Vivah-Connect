@@ -1,9 +1,10 @@
 "use client";
 
 import { FormInput } from "../form-input";
+import { FormData } from "@/types";
 
 interface Step2Props {
-  data: any;
+  data: FormData;
   onChange: (field: string, value: string) => void;
   errors: Record<string, string>;
 }

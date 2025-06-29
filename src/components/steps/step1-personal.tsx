@@ -2,9 +2,10 @@
 
 import { FormInput } from "../form-input";
 import React from "react";
+import { FormData } from "@/types";
 
 interface Step1Props {
-  data: any;
+  data: FormData;
   onChange: (field: string, value: string) => void;
   errors: Record<string, string>;
 }
@@ -17,7 +18,7 @@ export function Step1PersonalInfo({ data, onChange, errors }: Step1Props) {
           Personal Information
         </h2>
         <p className="text-gray-600">
-          Let's start with some basic details about you
+          Let&apos;s start with some basic details about you
         </p>
       </div>
 

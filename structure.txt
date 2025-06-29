@@ -1,0 +1,63 @@
+.
+├── components.json
+├── eslint.config.mjs
+├── LICENSE
+├── next.config.ts
+├── next-env.d.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── public
+│   ├── favicon.ico
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── google-icon.webp
+│   ├── next.svg
+│   ├── Selection.jpg
+│   ├── twoPersonsHoldingHands.jpeg
+│   ├── vercel.svg
+│   └── window.svg
+├── README.md
+├── src
+│   ├── app
+│   │   ├── biodata
+│   │   │   └── page.tsx
+│   │   ├── dashboard
+│   │   │   └── page.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── login
+│   │   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   └── register
+│   │       └── page.tsx
+│   ├── components
+│   │   ├── About.tsx
+│   │   ├── CTA.tsx
+│   │   ├── Features.tsx
+│   │   ├── Footer.tsx
+│   │   ├── form-input.tsx
+│   │   ├── form-select.tsx
+│   │   ├── Hero.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── progress-indicator.tsx
+│   │   ├── steps
+│   │   │   ├── step10-confirmation.tsx
+│   │   │   ├── step1-personal.tsx
+│   │   │   ├── step2-contact-info.tsx
+│   │   │   ├── step3-caste-religion.tsx
+│   │   │   ├── step4-education.tsx
+│   │   │   ├── step5-occupation.tsx
+│   │   │   ├── step6-family.tsx
+│   │   │   ├── step7-lifestyle.tsx
+│   │   │   ├── step8-location.tsx
+│   │   │   └── step9-partner-preference.tsx
+│   │   └── ui
+│   │       └── button.tsx
+│   └── lib
+│       ├── firebaseConfig.ts
+│       └── utils.ts
+├── structure.txt
+└── tsconfig.json
+
+12 directories, 49 files

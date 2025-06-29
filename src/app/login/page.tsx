@@ -1,15 +1,11 @@
 "use client";
 
 import { auth } from "@/lib/firebaseConfig";
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -25,38 +21,6 @@ export default function LoginPage() {
 
   if (!clientReady || !auth) return null;
 
-  const handleGoogleLogin = async () => {
-    if (!auth) {
-      setError("Authentication service is not available.");
-      return;
-    }
-
-    try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-      router.push("/dashboard");
-    } catch (err) {
-      setError("Google login failed.");
-      console.error(err);
-    }
-  };
-
-  const handleFacebookLogin = async () => {
-    if (!auth) {
-      setError("Authentication service is not available.");
-      return;
-    }
-
-    try {
-      const provider = new FacebookAuthProvider();
-      await signInWithPopup(auth, provider);
-      router.push("/dashboard");
-    } catch (err) {
-      setError("Facebook login failed.");
-      console.error(err);
-    }
-  };
-
   const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!auth) {
@@ -66,7 +30,7 @@ export default function LoginPage() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard");
+      router.replace("/dashboard");
     } catch (err) {
       setError("Invalid email or password.");
       console.error(err);
@@ -138,43 +102,10 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Don&apos;t have an account?{" "}
-              <a href="/register" className="text-pink-600 hover:underline">
+              <Link href="/register" className="text-pink-600 hover:underline">
                 Create an account
-              </a>
+              </Link>
             </p>
-          </div>
-
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-500 mb-2">or continue with</p>
-            <div className="space-y-2">
-              <button
-                onClick={handleGoogleLogin}
-                className="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-50 transition flex items-center justify-center"
-              >
-                <Image
-                  src="/google-icon.webp"
-                  alt="Google"
-                  width={20}
-                  height={20}
-                  className="mr-2"
-                />
-                Sign in with Google
-              </button>
-
-              <button
-                onClick={handleFacebookLogin}
-                className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center"
-              >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M22 12a10 10 0 1 0-11.94 9.95v-7.05h-2.6v-2.9h2.6V9.4c0-2.6 1.54-4.04 3.9-4.04 1.13 0 2.3.2 2.3.2v2.52H16c-1.27 0-1.66.79-1.66 1.6v1.9h2.82l-.45 2.9h-2.37v7.05A10 10 0 0 0 22 12z" />
-                </svg>
-                Sign in with Facebook
-              </button>
-            </div>
           </div>
         </div>
       </div>
