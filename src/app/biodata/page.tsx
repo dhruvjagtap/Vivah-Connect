@@ -16,17 +16,24 @@ import { Step10Confirmation } from "@/components/steps/step10-confirmation";
 
 const TOTAL_STEPS = 10;
 
+type AllowedValue =
+  | string
+  | number
+  | string[]
+  | { value: string; label: string }[]
+  | null;
+
 export default function BiodataForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: AllowedValue) => {
     setFormData((prev) => {
       const updated = { ...prev, [field]: value };
 
-      if (field === "dob") {
+      if (field === "dob" && typeof value === "string") {
         const birthDate = new Date(value);
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();

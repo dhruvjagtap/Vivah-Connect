@@ -5,9 +5,16 @@ import { FormInput } from "../ui/form-input";
 import { FormSelect } from "../ui/form-select";
 import { MultiSelect } from "@/components/ui/multi-select"; // Custom multiselect component
 
+type AllowedValue =
+  | string
+  | number
+  | string[]
+  | { value: string; label: string }[]
+  | null;
+
 interface Step9Props {
   data: FormData;
-  onChange: (field: string, value: any) => void;
+  onChange: (field: string, value: AllowedValue) => void;
   errors: Record<string, string>;
 }
 

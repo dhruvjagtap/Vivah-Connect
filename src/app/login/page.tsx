@@ -102,7 +102,7 @@ export default function LoginPage() {
           {/* Tagline */}
           <div className="text-center">
             <p className="text-sm text-gray-500 italic font-light">
-              "Every love story begins with a single step"
+              &quot;Every love story begins with a single step&quot;
             </p>
           </div>
 
@@ -119,7 +119,7 @@ export default function LoginPage() {
           {/* Sign Up Link */}
           <div className="text-center space-y-3">
             <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/register"
                 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 transition-all duration-200"
