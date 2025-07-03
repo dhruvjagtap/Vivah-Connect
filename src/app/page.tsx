@@ -5,6 +5,7 @@ import { Heart, Shield, MessageCircle, Sparkles, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import Navbar from "@/components/Navbar";
 
 export default function HomePage() {
   return (
@@ -17,6 +18,7 @@ export default function HomePage() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">

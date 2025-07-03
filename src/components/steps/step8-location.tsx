@@ -1,7 +1,7 @@
 "use client";
 
 import { FormData } from "@/types";
-import { FormInput } from "../form-input";
+import { FormInput } from "../ui/form-input";
 
 interface Step8Props {
   data: FormData;
@@ -31,6 +31,14 @@ export function Step8Location({ data, onChange, errors }: Step8Props) {
       />
 
       <FormInput
+        label="Landmark"
+        placeholder="E.g., Near temple, main market"
+        value={data.landmark || ""}
+        onChange={(e) => onChange("landmark", e.target.value)}
+        error={errors.landmark}
+      />
+
+      <FormInput
         label="Current City"
         placeholder="City where you currently live"
         value={data.currentCity || ""}
@@ -40,12 +48,45 @@ export function Step8Location({ data, onChange, errors }: Step8Props) {
       />
 
       <FormInput
+        label="District"
+        placeholder="E.g., Pune, Ahmedabad"
+        value={data.district || ""}
+        onChange={(e) => onChange("district", e.target.value)}
+        error={errors.district}
+      />
+
+      <FormInput
+        label="Pin Code"
+        type="text"
+        placeholder="Enter your area's pincode"
+        value={data.pinCode || ""}
+        onChange={(e) => onChange("pinCode", e.target.value)}
+        error={errors.pinCode}
+      />
+
+      <FormInput
+        label="State"
+        placeholder="Maharashtra, Gujarat, etc."
+        value={data.state || ""}
+        onChange={(e) => onChange("state", e.target.value)}
+        error={errors.state}
+      />
+
+      <FormInput
         label="Country"
         placeholder="India, USA, Canada, etc."
         value={data.country || ""}
         onChange={(e) => onChange("country", e.target.value)}
         error={errors.country}
         required
+      />
+
+      <FormInput
+        label="Home Location Map Link"
+        placeholder="Paste Google Maps link to your home (optional)"
+        value={data.mapLink || ""}
+        onChange={(e) => onChange("mapLink", e.target.value)}
+        error={errors.mapLink}
       />
     </div>
   );

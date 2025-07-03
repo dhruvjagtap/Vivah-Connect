@@ -1,8 +1,8 @@
 "use client";
 
 import { FormData } from "@/types";
-import { FormInput } from "../form-input";
-import { FormSelect } from "../form-select";
+import { FormInput } from "../ui/form-input";
+import { FormSelect } from "../ui/form-select";
 
 interface Step7Props {
   data: FormData;

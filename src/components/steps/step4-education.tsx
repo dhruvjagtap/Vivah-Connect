@@ -1,7 +1,7 @@
 "use client";
 
-import { FormInput } from "../form-input";
-import { FormSelect } from "../form-select";
+import { FormInput } from "../ui/form-input";
+import { FormSelect } from "../ui/form-select";
 import { FormData } from "@/types";
 
 interface Step4Props {
@@ -15,7 +15,7 @@ const degrees = [
   { value: "masters", label: "Master's Degree" },
   { value: "phd", label: "PhD/Doctorate" },
   { value: "diploma", label: "Diploma" },
-  { value: "professional", label: "Professional Degree" },
+  { value: "professional", label: "Professional Degree (e.g. MBBS, CA, LLB)" },
   { value: "other", label: "Other" },
 ];
 
@@ -41,7 +41,7 @@ export function Step4Education({ data, onChange, errors }: Step4Props) {
 
         <FormInput
           label="Field of Study"
-          placeholder="Computer Science, Medicine, etc."
+          placeholder="e.g. Computer Science, Ayurveda, Commerce"
           value={data.fieldOfStudy || ""}
           onChange={(e) => onChange("fieldOfStudy", e.target.value)}
           error={errors.fieldOfStudy}
@@ -50,8 +50,8 @@ export function Step4Education({ data, onChange, errors }: Step4Props) {
       </div>
 
       <FormInput
-        label="College/University"
-        placeholder="Name of your institution"
+        label="College/University Name"
+        placeholder="e.g. University of Mumbai"
         value={data.college || ""}
         onChange={(e) => onChange("college", e.target.value)}
         error={errors.college}
@@ -61,7 +61,7 @@ export function Step4Education({ data, onChange, errors }: Step4Props) {
       <FormInput
         label="Year of Graduation"
         type="number"
-        placeholder="2020"
+        placeholder="e.g. 2022"
         value={data.graduationYear || ""}
         onChange={(e) => onChange("graduationYear", e.target.value)}
         error={errors.graduationYear}
@@ -72,3 +72,4 @@ export function Step4Education({ data, onChange, errors }: Step4Props) {
     </div>
   );
 }
+// This component collects educational details like highest degree, field of study, college name, and graduation year.

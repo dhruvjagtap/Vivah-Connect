@@ -3,9 +3,17 @@ export interface FormData {
   fullName?: string;
     age?: string;
     height?: string;
+    dob?: string
+    maritalStatus?: string;
+    disability?: string;
     mobile?: string;
     email?: string;
+    whatsapp?: string;
+    alternateNumber?: string;
     socialMedia?: string;
+    linkedIn?: string;
+    facebook?: string;
+    instagram?: string;
     religion?: string;
     caste?: string;
     motherTongue?: string;
@@ -15,9 +23,18 @@ export interface FormData {
     graduationYear?: string;
     jobTitle?: string;
     company?: string;
+    occupationType?: string; 
+    officeAddress?: string;
+    businessName?: string;
+    businessType?: string;
+    businessAddress?:string;
+    otherOccupation?: string;
+    otherAddress?: string;
     annualIncome?: string;
     fatherName?: string;
     motherName?: string;
+    fatherOccupation?: string;
+    motherOccupation?: string;
     hobbies?: string;
     foodHabits?: string;
     drinking?: string;
@@ -35,4 +52,16 @@ export interface FormData {
     termsAccepted?: string;
     horoscope?: string;
     siblings?:string;
+    landmark?: string;
+    pinCode?: string;
+    state?: string;
+    district?: string;
+    mapLink?: string;
+    preferredCastes?: string;
+    preferredOccupation?: string;
+    preferredIncome?: string;
+    preferredCity?: string;
+    preferredState?: string;
+    preferredReligions?: string[];
+
 }

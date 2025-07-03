@@ -1,7 +1,7 @@
 "use client";
 
-import { FormInput } from "../form-input";
-import { FormSelect } from "../form-select";
+import { FormInput } from "../ui/form-input";
+import { FormSelect } from "../ui/form-select";
 import { FormData } from "@/types";
 
 interface Step3Props {

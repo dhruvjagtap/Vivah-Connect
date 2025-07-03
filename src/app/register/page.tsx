@@ -1,16 +1,14 @@
 "use client";
 
+import type React from "react";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-} from "firebase/auth";
+import Link from "next/link";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebaseConfig";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -21,7 +19,6 @@ export default function RegisterPage() {
     lastName: "",
     phone: "",
   });
-
   const [error, setError] = useState("");
   const [clientReady, setClientReady] = useState(false);
   const router = useRouter();
@@ -52,7 +49,6 @@ export default function RegisterPage() {
         email,
         password
       );
-
       const userDocRef = doc(db, "users", userCredential.user.uid);
       await setDoc(userDocRef, {
         uid: userCredential.user.uid,
@@ -62,7 +58,6 @@ export default function RegisterPage() {
         phone,
         createdAt: new Date(),
       });
-
       router.push("/login");
     } catch (err) {
       if (err instanceof Error) {
@@ -74,157 +69,160 @@ export default function RegisterPage() {
     }
   };
 
-  const handleGoogleSignup = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth!, provider);
-      const user = result.user;
-
-      const userDocRef = doc(db, "users", user.uid);
-      await setDoc(userDocRef, {
-        uid: user.uid,
-        email: user.email,
-        firstName: user.displayName?.split(" ")[0] || "",
-        lastName: user.displayName?.split(" ")[1] || "",
-        phone: user.phoneNumber || "",
-        createdAt: new Date(),
-      });
-
-      router.push("/dashboard");
-    } catch (err) {
-      setError("Google sign-up failed.");
-      console.error(err);
-    }
-  };
-
-  const handleFacebookSignup = async () => {
-    try {
-      const provider = new FacebookAuthProvider();
-      const result = await signInWithPopup(auth!, provider);
-
-      const fbProvider = new FacebookAuthProvider();
-      await signInWithPopup(auth!, fbProvider);
-
-      const user = result.user;
-
-      const userDocRef = doc(db, "users", user.uid);
-      await setDoc(userDocRef, {
-        uid: user.uid,
-        email: user.email,
-        firstName: user.displayName?.split(" ")[0] || "",
-        lastName: user.displayName?.split(" ")[1] || "",
-        phone: user.phoneNumber || "",
-        createdAt: new Date(),
-      });
-
-      router.push("/dashboard");
-    } catch (err) {
-      setError("Facebook sign-up failed.");
-      console.error(err);
-    }
-  };
-
   return (
-    <div className="relative h-screen w-screen overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="https://images.pexels.com/photos/169193/pexels-photo-169193.jpeg"
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
-      </div>
-
-      {/* <div className="absolute inset-0 bg-black bg-opacity-60 z-10" /> */}
-
-      <div className="relative z-20 flex items-center justify-center h-full px-4">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-          <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-            Create Your Account
-          </h2>
-
-          {error && (
-            <p className="text-red-500 text-sm text-center mb-4">{error}</p>
-          )}
-
-          <form onSubmit={handleRegister} className="space-y-4">
-            {[
-              { name: "firstName", label: "First Name" },
-              { name: "lastName", label: "Last Name" },
-              { name: "email", label: "Email", type: "email" },
-              { name: "phone", label: "Phone", type: "tel" },
-              { name: "password", label: "Password", type: "password" },
-              {
-                name: "confirmPassword",
-                label: "Confirm Password",
-                type: "password",
-              },
-            ].map(({ name, label, type = "text" }) => (
-              <div key={name}>
-                <label className="block text-sm font-medium text-gray-700">
-                  {label}
-                </label>
-                <input
-                  type={type}
-                  name={name}
-                  required
-                  value={formData[name as keyof typeof formData]}
-                  onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-pink-500 text-black"
-                />
-              </div>
-            ))}
-
-            <button
-              type="submit"
-              className="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition"
-            >
-              Sign Up
-            </button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              Already have an account?{" "}
-              <a href="/login" className="text-pink-600 hover:underline">
-                Log in
-              </a>
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-lg">
+        {/* Main Registration Card */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 space-y-6">
+          {/* Header */}
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-serif font-bold text-gray-800 tracking-tight">
+              Create Your Account
+            </h1>
+            <p className="text-gray-600 font-light">
+              Your journey to forever begins here
             </p>
           </div>
 
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-500 mb-2">or sign up with</p>
-            <div className="space-y-2">
-              <button
-                onClick={handleGoogleSignup}
-                className="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-50 transition flex items-center justify-center"
-              >
-                <Image
-                  src="/google-icon.webp"
-                  alt="Google"
-                  width={20}
-                  height={20}
-                  className="mr-2"
-                />
-                Sign up with Google
-              </button>
-
-              <button
-                onClick={handleFacebookSignup}
-                className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center"
-              >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M22 12a10 10 0 1 0-11.94 9.95v-7.05h-2.6v-2.9h2.6V9.4c0-2.6 1.54-4.04 3.9-4.04 1.13 0 2.3.2 2.3.2v2.52H16c-1.27 0-1.66.79-1.66 1.6v1.9h2.82l-.45 2.9h-2.37v7.05A10 10 0 0 0 22 12z" />
-                </svg>
-                Sign up with Facebook
-              </button>
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+              <p className="text-red-600 text-sm text-center">{error}</p>
             </div>
+          )}
+
+          {/* Registration Form */}
+          <form onSubmit={handleRegister} className="space-y-4">
+            {/* Name Fields Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  required
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-pink-500 transition-all duration-200 bg-white/50 backdrop-blur-sm text-gray-800 placeholder-gray-400"
+                  placeholder="Enter first name"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  required
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-pink-500 transition-all duration-200 bg-white/50 backdrop-blur-sm text-gray-800 placeholder-gray-400"
+                  placeholder="Enter last name"
+                />
+              </div>
+            </div>
+
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-pink-500 transition-all duration-200 bg-white/50 backdrop-blur-sm text-gray-800 placeholder-gray-400"
+                placeholder="Enter your email"
+              />
+            </div>
+
+            {/* Phone Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-pink-500 transition-all duration-200 bg-white/50 backdrop-blur-sm text-gray-800 placeholder-gray-400"
+                placeholder="Enter your phone number"
+              />
+            </div>
+
+            {/* Password Fields */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                required
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-pink-500 transition-all duration-200 bg-white/50 backdrop-blur-sm text-gray-800 placeholder-gray-400"
+                placeholder="Create a password"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                name="confirmPassword"
+                required
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-pink-500 transition-all duration-200 bg-white/50 backdrop-blur-sm text-gray-800 placeholder-gray-400"
+                placeholder="Confirm your password"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+            >
+              Create Account
+            </Button>
+          </form>
+
+          {/* Login Link */}
+          <div className="text-center space-y-3">
+            <p className="text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 transition-all duration-200"
+              >
+                Log in
+              </Link>
+            </p>
+
+            <Link
+              href="/"
+              className="inline-block text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200"
+            >
+              ← Back to Home
+            </Link>
+          </div>
+        </div>
+
+        {/* Bottom Decorative Element */}
+        <div className="mt-8 text-center">
+          <div className="inline-flex items-center space-x-2 text-gray-400">
+            <div className="w-2 h-2 bg-gradient-to-r from-rose-300 to-pink-300 rounded-full"></div>
+            <div className="w-1 h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-full"></div>
+            <div className="w-2 h-2 bg-gradient-to-r from-rose-300 to-pink-300 rounded-full"></div>
           </div>
         </div>
       </div>

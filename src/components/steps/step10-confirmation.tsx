@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { FormInput } from "../ui/form-input";
 import React from "react";
-
 import { FormData } from "@/types";
 
 interface Step10Props {
@@ -60,7 +60,27 @@ export function Step10Confirmation({
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormInput
+          label="Mobile Number"
+          type="tel"
+          placeholder="+91 98765 43210"
+          value={data.mobile || ""}
+          onChange={(e) => onChange("mobile", e.target.value)}
+          error={errors.mobile}
+        />
+
+        <FormInput
+          label="Email Address"
+          type="email"
+          placeholder="your.email@example.com"
+          value={data.email || ""}
+          onChange={(e) => onChange("email", e.target.value)}
+          error={errors.email}
+        />
+      </div>
+
+      <div className="space-y-4 mt-4">
         <label className="flex items-start space-x-3">
           <input
             type="checkbox"
@@ -71,16 +91,10 @@ export function Step10Confirmation({
             className="mt-1 h-4 w-4 text-rose-600 focus:ring-rose-500 border-rose-300 rounded"
           />
           <span className="text-sm text-gray-700">
-            I declare that all the information provided is true and accurate to
-            the best of my knowledge. I agree to the{" "}
-            <a href="#" className="text-rose-600 hover:text-rose-700 underline">
-              Terms of Service
-            </a>{" "}
-            and{" "}
-            <a href="#" className="text-rose-600 hover:text-rose-700 underline">
-              Privacy Policy
-            </a>
-            .
+            <strong>Affidavit:</strong> The information given above is
+            absolutely true and I am giving it on my own responsibility. If the
+            above information is found to be false, legal action may be taken
+            against me.
           </span>
         </label>
         {errors.termsAccepted && (
