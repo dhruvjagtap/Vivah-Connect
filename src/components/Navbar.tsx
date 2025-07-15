@@ -6,13 +6,10 @@ import { auth } from "@/lib/firebaseConfig";
 import Link from "next/link";
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (!auth) {
-      setIsLoggedIn(false);
-      return;
-    }
+    if (!auth) return;
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsLoggedIn(!!user);
@@ -28,56 +25,68 @@ export default function Navbar() {
     }
   };
 
-  if (isLoggedIn === null) return null;
-
   return (
-    <nav className="bg-gradient-to-r from-rose-500 to-pink-600 text-white px-4 py-4 shadow-md">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold font-serif">
-          Vivah Connect
-        </Link>
+    <nav className="bg-gradient-to-r from-rose-500 to-pink-600 text-white py-4 shadow-md sticky top-0 z-50">
+      <div className="flex justify-between items-center px-[200px]">
+        {/* Left Section */}
+        <div>
+          <Link href="/" className="text-xl font-bold font-serif">
+            Vivah Connect
+          </Link>
+        </div>
 
-        <ul className="flex space-x-4 text-sm sm:text-base font-medium">
-          {isLoggedIn ? (
-            <>
-              <li>
-                <Link
-                  href="/dashboard"
-                  className="hover:underline transition-colors duration-200"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/profile"
-                  className="hover:underline transition-colors duration-200"
-                >
-                  Profile
-                </Link>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <button
-                  onClick={scrollToAbout}
-                  className="hover:underline transition-colors duration-200"
-                >
-                  About
-                </button>
-              </li>
-              <li>
-                <Link
-                  href="/login"
-                  className="hover:underline transition-colors duration-200"
-                >
-                  Login
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
+        {/* Right Section */}
+        <div>
+          <ul className="flex space-x-6 text-sm sm:text-base font-medium">
+            {isLoggedIn ? (
+              <>
+                <li>
+                  <Link
+                    href="/dashboard"
+                    className="transition-transform duration-200 hover:scale-125"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/dashboard"
+                    className="transition-transform duration-200 hover:scale-125"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/profile"
+                    className="transition-transform duration-200 hover:scale-125"
+                  >
+                    Profile
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <button
+                    onClick={scrollToAbout}
+                    className="transition-transform duration-200 hover:scale-125"
+                  >
+                    About
+                  </button>
+                </li>
+                <li>
+                  <Link
+                    href="/login"
+                    className="inline-block transition-transform duration-200 hover:scale-125"
+                  >
+                    Login
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       </div>
     </nav>
   );

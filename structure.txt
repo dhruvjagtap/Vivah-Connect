@@ -7,22 +7,15 @@
 ├── package.json
 ├── package-lock.json
 ├── postcss.config.mjs
-├── public
-│   ├── favicon.ico
-│   ├── file.svg
-│   ├── globe.svg
-│   ├── google-icon.webp
-│   ├── next.svg
-│   ├── Selection.jpg
-│   ├── twoPersonsHoldingHands.jpeg
-│   ├── vercel.svg
-│   └── window.svg
 ├── README.md
 ├── src
 │   ├── app
 │   │   ├── biodata
 │   │   │   └── page.tsx
 │   │   ├── dashboard
+│   │   │   ├── admin
+│   │   │   │   └── page.tsx
+│   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -36,11 +29,8 @@
 │   │   ├── CTA.tsx
 │   │   ├── Features.tsx
 │   │   ├── Footer.tsx
-│   │   ├── form-input.tsx
-│   │   ├── form-select.tsx
 │   │   ├── Hero.tsx
 │   │   ├── Navbar.tsx
-│   │   ├── progress-indicator.tsx
 │   │   ├── steps
 │   │   │   ├── step10-confirmation.tsx
 │   │   │   ├── step1-personal.tsx
@@ -53,10 +43,20 @@
 │   │   │   ├── step8-location.tsx
 │   │   │   └── step9-partner-preference.tsx
 │   │   └── ui
-│   │       └── button.tsx
-│   └── lib
-│       ├── firebaseConfig.ts
-│       └── utils.ts
+│   │       ├── avatar.tsx
+│   │       ├── badge.tsx
+│   │       ├── button.tsx
+│   │       ├── card.tsx
+│   │       ├── form-input.tsx
+│   │       ├── form-select.tsx
+│   │       ├── multi-select.tsx
+│   │       ├── progress-indicator.tsx
+│   │       └── progress.tsx
+│   ├── lib
+│   │   ├── firebaseConfig.ts
+│   │   └── utils.ts
+│   └── types.ts
+├── structure.tst
 ├── structure.txt
 └── tsconfig.json
 

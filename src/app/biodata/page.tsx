@@ -15,6 +15,7 @@ import { Step9PartnerPreference } from "@/components/steps/step9-partner-prefere
 import { Step10Confirmation } from "@/components/steps/step10-confirmation";
 import { getFirestore, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const TOTAL_STEPS = 10;
 
@@ -30,6 +31,7 @@ export default function BiodataForm() {
   const [formData, setFormData] = useState<FormData>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleChange = (field: string, value: AllowedValue) => {
     setFormData((prev) => {
@@ -102,9 +104,11 @@ export default function BiodataForm() {
         ...formData,
         biodataCompleted: true,
         createdAt: serverTimestamp(),
+        createdBy: user.uid,
       });
 
       alert("Profile created successfully!");
+      router.replace("/dashboard");
     } catch (error) {
       console.error("Error saving to Firestore:", error);
       alert("There was an error saving your profile. Please try again.");

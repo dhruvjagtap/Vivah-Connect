@@ -4,20 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Heart, Shield, MessageCircle, Sparkles, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Head from "next/head";
 import Navbar from "@/components/Navbar";
+import { metadata } from "@/types";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
-      <Head>
-        <title>Vivah Connect | Modern Indian Matchmaking</title>
-        <meta
-          name="description"
-          content="Vivah Connect is a modern AI-powered marriage bureau helping singles find meaningful matches with cultural sensitivity and privacy."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
       <Navbar />
 
       {/* Hero Section */}
@@ -42,7 +34,7 @@ export default function HomePage() {
                   size="lg"
                   className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
-                  <Link href="/biodata">Find Your Match</Link>
+                  <Link href="/register">Find Your Match</Link>
                 </Button>
               </div>
               <div className="pt-4 border-t border-rose-200">
@@ -74,7 +66,7 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section className="py-16 md:py-20 bg-white">
+      <section id="about-section" className="py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-800 mb-4">
@@ -135,7 +127,7 @@ export default function HomePage() {
                 size="lg"
                 className="bg-white text-rose-600 hover:bg-gray-50 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 font-semibold"
               >
-                <Link href="/biodata">Connect</Link>
+                <Link href="/register">Connect</Link>
               </Button>
 
               <Button

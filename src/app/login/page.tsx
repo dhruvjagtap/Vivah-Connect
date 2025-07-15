@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { auth } from "@/lib/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useEffect } from "react";
@@ -25,14 +25,29 @@ export default function LoginPage() {
 
   const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!auth) {
-      setError("Authentication service is not available.");
-      return;
-    }
+    setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.replace("/dashboard");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      const db = getFirestore();
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        if (data?.biodataCompleted) {
+          router.replace("/dashboard");
+        } else {
+          router.replace("/biodata");
+        }
+      } else {
+        router.replace("/biodata"); // new user, no doc
+      }
     } catch (err) {
       setError("Invalid email or password.");
       console.error(err);

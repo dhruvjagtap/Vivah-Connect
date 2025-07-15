@@ -1,7 +1,10 @@
+// src/app/dashaboard/layout.tsx
 "use client";
 
 import type React from "react";
-
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebaseConfig";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -33,6 +36,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false); // Toggle for demo purposes
   const pathname = usePathname();
+  const router = useRouter();
 
   const userNavItems = [
     { name: "My Profile", href: "/dashboard", icon: User },
@@ -54,6 +58,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   ];
 
   const navItems = isAdmin ? adminNavItems : userNavItems;
+
+  const handleLogOut = async () => {
+    try {
+      await signOut(auth);
+      router.push("/login"); // redirect to login page
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
@@ -141,6 +154,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <Button
               variant="ghost"
               className="w-full justify-start text-gray-700 hover:text-red-600 hover:bg-red-50"
+              onClick={handleLogOut}
             >
               <LogOut className="w-5 h-5 mr-3" />
               Logout
