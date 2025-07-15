@@ -15,6 +15,10 @@ const foodHabits = [
   { value: "non-vegetarian", label: "Non-Vegetarian" },
   { value: "vegan", label: "Vegan" },
   { value: "jain-vegetarian", label: "Jain Vegetarian" },
+  {
+    value: "both(vegetarian-nonvegetarian",
+    label: "Both (vegetarian & non-vegetarian",
+  },
 ];
 
 const drinkingHabits = [
@@ -53,6 +57,7 @@ export function Step7Lifestyle({ data, onChange, errors }: Step7Props) {
 
       <FormSelect
         label="Food Habits"
+        title="Food Habits"
         options={foodHabits}
         value={data.foodHabits || ""}
         onChange={(e) => onChange("foodHabits", e.target.value)}
@@ -62,6 +67,7 @@ export function Step7Lifestyle({ data, onChange, errors }: Step7Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormSelect
+          title="Drinking"
           label="Drinking"
           options={drinkingHabits}
           value={data.drinking || ""}
@@ -71,6 +77,7 @@ export function Step7Lifestyle({ data, onChange, errors }: Step7Props) {
         />
 
         <FormSelect
+          title="Smoking"
           label="Smoking"
           options={smokingHabits}
           value={data.smoking || ""}

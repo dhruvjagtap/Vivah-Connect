@@ -24,7 +24,7 @@ const incomeRanges = [
 const occupationTypes = [
   { value: "job", label: "Job" },
   { value: "business", label: "Business" },
-  { value: "other", label: "Other (Odar)" },
+  { value: "other", label: "Other" },
 ];
 
 export function Step5Occupation({ data, onChange, errors }: Step5Props) {
@@ -50,6 +50,7 @@ export function Step5Occupation({ data, onChange, errors }: Step5Props) {
       </div>
 
       <FormSelect
+        title="Select occupation type"
         label="Occupation Type"
         options={occupationTypes}
         value={occupationType}
@@ -142,6 +143,7 @@ export function Step5Occupation({ data, onChange, errors }: Step5Props) {
 
       {/* Common to All */}
       <FormSelect
+        title="Select Annual Income"
         label="Annual Income / CTC"
         options={incomeRanges}
         value={data.annualIncome || ""}

@@ -4,6 +4,7 @@ export interface FormData {
     age?: string;
     height?: string;
     dob?: string
+    gender?: string;
     maritalStatus?: string;
     disability?: string;
     mobile?: string;

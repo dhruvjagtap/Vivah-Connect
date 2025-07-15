@@ -12,9 +12,14 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID!,
 };
 
+export const getClientAuth = () => {
+  if (typeof window === "undefined") throw new Error("Auth not available on server");
+  return getAuth(app);
+};
+
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
-const auth = typeof window !== "undefined" ? getAuth(app) : null;
+const auth = getAuth(app);
 const db = getFirestore(app);
 
 export { auth, db };

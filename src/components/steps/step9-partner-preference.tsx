@@ -110,6 +110,7 @@ export function Step9PartnerPreference({ data, onChange, errors }: Step9Props) {
       />
 
       <FormSelect
+        title="Education"
         label="Preferred Education Level"
         options={educationLevels}
         value={data.preferredEducation || ""}
@@ -119,6 +120,7 @@ export function Step9PartnerPreference({ data, onChange, errors }: Step9Props) {
       />
 
       <FormSelect
+        title="Occupation"
         label="Preferred Occupation Type"
         options={occupations}
         value={data.preferredOccupation || ""}
@@ -127,6 +129,7 @@ export function Step9PartnerPreference({ data, onChange, errors }: Step9Props) {
       />
 
       <FormSelect
+        title="Annual Income"
         label="Preferred Annual Income"
         options={incomeRanges}
         value={data.preferredIncome || ""}

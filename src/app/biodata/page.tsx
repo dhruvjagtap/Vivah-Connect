@@ -13,6 +13,8 @@ import { Step7Lifestyle } from "@/components/steps/step7-lifestyle";
 import { Step8Location } from "@/components/steps/step8-location";
 import { Step9PartnerPreference } from "@/components/steps/step9-partner-preference";
 import { Step10Confirmation } from "@/components/steps/step10-confirmation";
+import { getFirestore, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const TOTAL_STEPS = 10;
 
@@ -83,15 +85,31 @@ export default function BiodataForm() {
     if (!validateStep(10)) return;
 
     setIsSubmitting(true);
+
     try {
-      console.log("Submitting form data:", formData);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        alert("User not authenticated. Please login again.");
+        return;
+      }
+
+      const db = getFirestore();
+      const userRef = doc(db, "users", user.uid);
+
+      await setDoc(userRef, {
+        ...formData,
+        biodataCompleted: true,
+        createdAt: serverTimestamp(),
+      });
+
       alert("Profile created successfully!");
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("There was an error creating your profile. Please try again.");
+      console.error("Error saving to Firestore:", error);
+      alert("There was an error saving your profile. Please try again.");
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // <--- stop loading
     }
   };
 

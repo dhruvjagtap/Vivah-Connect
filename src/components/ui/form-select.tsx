@@ -1,16 +1,30 @@
 import type React from "react";
 import { forwardRef } from "react";
 
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
+interface GroupedOption {
+  label: string;
+  options: SelectOption[];
+}
+
 interface FormSelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  title: string;
   label: string;
   error?: string;
   required?: boolean;
-  options: { value: string; label: string }[];
+  options: (SelectOption | GroupedOption)[];
 }
 
 export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
-  ({ label, error, required, options, className = "", ...props }, ref) => {
+  (
+    { label, title, error, required, options, className = "", ...props },
+    ref
+  ) => {
     return (
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">
@@ -24,12 +38,27 @@ export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
           } ${className}`}
           {...props}
         >
-          <option value="">Select an option</option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
+          <option value="">{title}</option>
+
+          {options.map((option) => {
+            if ("options" in option) {
+              return (
+                <optgroup key={option.label} label={option.label}>
+                  {option.options.map((child) => (
+                    <option key={child.value} value={child.value}>
+                      {child.label}
+                    </option>
+                  ))}
+                </optgroup>
+              );
+            }
+
+            return (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            );
+          })}
         </select>
         {error && <p className="text-sm text-red-600">{error}</p>}
       </div>

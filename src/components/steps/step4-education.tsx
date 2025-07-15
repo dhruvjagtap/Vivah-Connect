@@ -31,6 +31,7 @@ export function Step4Education({ data, onChange, errors }: Step4Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormSelect
+          title="Education"
           label="Highest Degree"
           options={degrees}
           value={data.degree || ""}
