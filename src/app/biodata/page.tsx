@@ -42,16 +42,29 @@ export default function BiodataForm() {
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
         const m = today.getMonth() - birthDate.getMonth();
+
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
           age--;
         }
+
         updated.age = age.toString();
+
+        // Check if age is less than 21
+        if (age < 21) {
+          setErrors((prev) => ({
+            ...prev,
+            dob: "You are underage. Minimum age is 21.",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, dob: "" }));
+        }
       }
 
       return updated;
     });
 
-    if (errors[field]) {
+    // Clear other errors on field change
+    if (field !== "dob" && errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };

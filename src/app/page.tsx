@@ -5,7 +5,6 @@ import { Heart, Shield, MessageCircle, Sparkles, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { metadata } from "@/types";
 
 export default function HomePage() {
   return (

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
+import { useState, useEffect } from "react";
 import {
   Edit,
   Eye,
@@ -18,9 +19,59 @@ import {
   CheckCircle,
   Users,
 } from "lucide-react";
+import { auth, db } from "@/lib/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { doc, getDoc } from "firebase/firestore";
+
+interface UserData {
+  fullName?: string;
+  age?: number | string;
+  currentCity?: string;
+  jobTitle?: string;
+}
 
 export default function UserDashboard() {
-  const profileCompletion = 85;
+  const [userId, setUserId] = useState("");
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+      } else {
+        router.push("/login");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchProfile = async () => {
+      const docRef = doc(db, "users", userId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setUserData(docSnap.data());
+      }
+    };
+
+    fetchProfile();
+  }, [userId]);
+
+  const calculateCompletion = () => {
+    if (!userData) return 0;
+    const totalFields = 15; // number of important fields
+    const filledFields = Object.entries(userData).filter(
+      ([, val]) => val !== "" && val !== null && val !== undefined
+    ).length;
+    return Math.floor((filledFields / totalFields) * 100);
+  };
+
+  const profileCompletion = calculateCompletion();
 
   const matches = [
     {
@@ -61,12 +112,18 @@ export default function UserDashboard() {
     accepted: 3,
   };
 
+  if (!userData) {
+    return (
+      <p className="text-center mt-10 text-gray-500">Loading your profile...</p>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-rose-500 to-pink-600 rounded-2xl p-6 text-white">
         <h1 className="text-2xl font-serif font-bold mb-2">
-          Welcome back, John!
+          Welcome back, {userData?.fullName || "User"}!
         </h1>
         <p className="opacity-90">Find your perfect match today</p>
       </div>
@@ -145,13 +202,24 @@ export default function UserDashboard() {
                 <Avatar className="w-16 h-16">
                   <AvatarImage src="/placeholder.svg?height=64&width=64" />
                   <AvatarFallback className="bg-gradient-to-r from-rose-500 to-pink-600 text-white text-lg">
-                    JD
+                    {userData?.fullName
+                      ?.split(" ")
+                      ?.map((n: string) => n[0])
+                      ?.join("")
+                      ?.toUpperCase() || "NA"}
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="font-semibold text-gray-800">John Doe</h3>
-                  <p className="text-sm text-gray-600">28 years • Mumbai</p>
-                  <p className="text-sm text-gray-600">Software Engineer</p>
+                  <h3 className="font-semibold text-gray-800">
+                    {userData?.fullName || "Name not set"}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {userData?.age || "Age not set"} years •{" "}
+                    {userData?.currentCity || "City not set"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {userData?.jobTitle || "Profession not set"}
+                  </p>
                 </div>
               </div>
 

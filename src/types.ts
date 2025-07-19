@@ -66,3 +66,9 @@ export interface FormData {
     preferredReligions?: string[];
 
 }
+
+export const metadata = {
+  title: "Vivah Connect | Modern Indian Matchmaking",
+  description:
+    "Vivah Connect is a modern AI-powered marriage bureau helping singles find meaningful matches with cultural sensitivity and privacy.",
+};
