@@ -22,6 +22,7 @@ import {
   X,
 } from "lucide-react";
 import { onAuthStateChanged } from "firebase/auth";
+import { Toaster } from "sonner";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -212,7 +213,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </header>
 
         {/* Page content */}
-        <main className="p-6">{children}</main>
+        <main className="p-6">
+          <Toaster />
+          {children}
+        </main>
       </div>
     </div>
   );

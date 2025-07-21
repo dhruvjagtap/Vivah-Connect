@@ -7,22 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { useState, useEffect } from "react";
-import {
-  Edit,
-  Eye,
-  Heart,
-  MapPin,
-  Calendar,
-  GraduationCap,
-  Briefcase,
-  Star,
-  CheckCircle,
-  Users,
-} from "lucide-react";
+import { Edit, Eye, Heart, Star, CheckCircle, Users } from "lucide-react";
 import { auth, db } from "@/lib/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
+import StatsCard from "@/components/Dashboard/StatsCard";
+import MatchCard from "@/components/Dashboard/MatchCard";
+import { toast } from "sonner";
 
 interface UserData {
   fullName?: string;
@@ -35,6 +27,13 @@ export default function UserDashboard() {
   const [userId, setUserId] = useState("");
   const [userData, setUserData] = useState<UserData | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (userData) {
+      const completion = calculateCompletion();
+      toast("Complete your profile to get better matches!");
+    }
+  }, [userData]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -130,59 +129,19 @@ export default function UserDashboard() {
 
       {/* Profile Status & Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="bg-white/80 backdrop-blur-sm border-pink-100">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Profile Views</p>
-                <p className="text-2xl font-bold text-gray-800">247</p>
-              </div>
-              <Eye className="w-8 h-8 text-rose-500" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/80 backdrop-blur-sm border-pink-100">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Interests Received</p>
-                <p className="text-2xl font-bold text-gray-800">
-                  {interests.received}
-                </p>
-              </div>
-              <Heart className="w-8 h-8 text-rose-500" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/80 backdrop-blur-sm border-pink-100">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Matches Found</p>
-                <p className="text-2xl font-bold text-gray-800">156</p>
-              </div>
-              <Users className="w-8 h-8 text-rose-500" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/80 backdrop-blur-sm border-pink-100">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Profile Score</p>
-                <p className="text-2xl font-bold text-gray-800">9.2/10</p>
-              </div>
-              <Star className="w-8 h-8 text-rose-500" />
-            </div>
-          </CardContent>
-        </Card>
+        <StatsCard title="Profile Views" value={247} Icon={Eye} />
+        <StatsCard
+          title="Interests Received"
+          value={interests.received}
+          Icon={Heart}
+        />
+        <StatsCard title="Matches Found" value={156} Icon={Users} />
+        <StatsCard title="Profile Score" value="9.2/10" Icon={Star} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Profile Section */}
+
         <div className="lg:col-span-1 space-y-6">
           <Card className="bg-white/80 backdrop-blur-sm border-pink-100">
             <CardHeader>
@@ -277,71 +236,7 @@ export default function UserDashboard() {
             <CardContent>
               <div className="space-y-4">
                 {matches.map((match) => (
-                  <div
-                    key={match.id}
-                    className="flex items-center space-x-4 p-4 rounded-xl border border-pink-100 hover:bg-pink-50 transition-colors"
-                  >
-                    <Avatar className="w-16 h-16">
-                      <AvatarImage src={match.image || "/placeholder.svg"} />
-                      <AvatarFallback className="bg-gradient-to-r from-rose-500 to-pink-600 text-white">
-                        {match.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
-
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-semibold text-gray-800">
-                          {match.name}
-                        </h4>
-                        <Badge className="bg-green-100 text-green-700">
-                          {match.compatibility}% Match
-                        </Badge>
-                      </div>
-
-                      <div className="flex items-center space-x-4 text-sm text-gray-600">
-                        <div className="flex items-center">
-                          <Calendar className="w-4 h-4 mr-1" />
-                          {match.age} years
-                        </div>
-                        <div className="flex items-center">
-                          <MapPin className="w-4 h-4 mr-1" />
-                          {match.city}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center space-x-4 text-sm text-gray-600">
-                        <div className="flex items-center">
-                          <Briefcase className="w-4 h-4 mr-1" />
-                          {match.profession}
-                        </div>
-                        <div className="flex items-center">
-                          <GraduationCap className="w-4 h-4 mr-1" />
-                          {match.education}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex space-x-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-pink-200 hover:bg-pink-50 bg-transparent"
-                      >
-                        <Eye className="w-4 h-4 mr-1" />
-                        View
-                      </Button>
-                      <Button
-                        size="sm"
-                        className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700"
-                      >
-                        <Heart className="w-4 h-4 mr-1" />
-                        Interest
-                      </Button>
-                    </div>
-                  </div>
+                  <MatchCard key={match.id} match={match} />
                 ))}
               </div>
 

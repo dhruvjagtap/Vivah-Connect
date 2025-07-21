@@ -50,14 +50,6 @@ export default function Navbar() {
                 </li>
                 <li>
                   <Link
-                    href="/dashboard"
-                    className="transition-transform duration-200 hover:scale-125"
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <Link
                     href="/profile"
                     className="transition-transform duration-200 hover:scale-125"
                   >
