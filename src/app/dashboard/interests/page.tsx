@@ -391,7 +391,7 @@ export default function InterestsPage() {
             <TabsContent value="sent" className="space-y-4 mt-0">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-serif font-semibold text-gray-800">
-                  Interests you've sent
+                  Interests you&apos;ve sent
                 </h3>
                 <p className="text-sm text-gray-600">
                   {sentInterests.length} total interests

@@ -30,7 +30,6 @@ export default function UserDashboard() {
 
   useEffect(() => {
     if (userData) {
-      const completion = calculateCompletion();
       toast("Complete your profile to get better matches!");
     }
   }, [userData]);
